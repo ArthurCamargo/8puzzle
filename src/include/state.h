@@ -3,8 +3,6 @@
 #include <iostream>
 #include <string>
 
-#include "problem.h"
-
 class State {
     /* Single state of a problem:
      * cost: long
@@ -23,5 +21,3 @@ class State {
         State();
         ~State();
 };
-
-

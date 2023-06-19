@@ -6,18 +6,19 @@
 #include "node.h"
 #include "instance.h"
 
+
 class Problem {
     /* Problem class:
-     * description: string
      * possible_actions: const vector<Action>
+     * std::vector<Instance> instances
      */
     private:
-        std::string description;
-        std::vector<Instance*> instances;
-        std::vector<Action> possible_actions;
+        std::vector<Instance> instances;
+        const std::vector<Action> possible_actions;
 
     public:
-        Problem(std::string description, std::vector<Action> possible_actions);
+        Problem() = default;
+        Problem(const std::vector<Action> possible_actions);
         void CreateInstance();
-        ~Problem();
+        ~Problem() = default;
 };

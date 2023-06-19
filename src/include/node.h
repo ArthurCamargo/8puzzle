@@ -1,11 +1,11 @@
 #pragma once 
 
-#include "state.h"
-#include "action.h"
-
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+
+#include "action.h"
+#include "state.h"
 
 
 class Node {
