@@ -1,13 +1,11 @@
-#include <stdio.h>
-#include <string>
+#pragma once
 
-#include "node.h"
-#include "state.h"
+#include <vector>
 
-
-class Algorithm {
-    // Algorithms that can be used
-    private:
-        std::string desc; // Description of the algorithm
-    public:;
-};
+typedef enum algorithms {
+    BFS,
+    IDFS,
+    ASTAR,
+    IDASTAR,
+    GBFS,
+}algorithms;

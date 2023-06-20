@@ -1,23 +1,21 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include <string>
 
 class State {
-    /* Single state of a problem:
-     * cost: long
-     * body: string
-     * heuristic_value: long
-     * f_cost: long
-     */
-
-    private:
-        long cost;
-        std::string body;
-        long heuristic_value;
-        long f_cost;
-
     public:
-        State();
-        ~State();
+        std::string game;
+
+        State(std::string new_game) {
+            this->game = new_game;
+        }
+
+        void print() {
+            std::cout << "Game: " << game << std::endl;
+        }
+
+        State() = default;
+        ~State() = default;
 };
