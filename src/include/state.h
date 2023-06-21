@@ -23,6 +23,7 @@ class State {
         action lastAction;
         int cursor;
         State* parent;
+        int heuristic;
 
         std::string game;
 
@@ -32,7 +33,7 @@ class State {
         bool isPossibleMove(action move);
         State nextState(action move);
 
-        long manhattan();
+        int manhattan();
 
         int hash() const;
         bool operator== (const State &secondState);

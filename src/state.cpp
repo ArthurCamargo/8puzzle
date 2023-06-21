@@ -57,10 +57,10 @@ std::vector<State> State::expand(){
 State::State(std::string newGame) {
     this->game = newGame;
     this->cursor = this->game.find('0');
+    this->heuristic = this->manhattan();
     this->lastAction = NONE;
     this->pathCost = 0;
     this->parent = NULL;
-    //this->costH = this->manhattan();
 }
 
 State::State(std::string newGame, int cursorPosition, action newAction, long pathCost, State* parent)
@@ -70,7 +70,7 @@ State::State(std::string newGame, int cursorPosition, action newAction, long pat
     this->pathCost = pathCost;
     this->parent = parent;
     this->lastAction = newAction;
-    //this->costH = this->manhattan();
+    this->heuristic = this->manhattan();
 }
 
 bool State::isPossibleMove(action move)
@@ -124,7 +124,26 @@ State State::nextState(action move)
     }
 }
 
-long manhattan();
+int State::manhattan()
+{
+    int score = 0;
+    std::string objective = "012345678";
+
+    if(this->game.size() == 15)
+        objective = "012345679ABCDEF";
+
+    int sideSize  = sqrt(this->game.size());
+
+    for(int i = 0; i < objective.size(); i ++)
+    {
+        int pos = this->game.find(objective[i]);
+        std::cout << objective [i] << ", " <<  pos << std::endl;
+        score += abs(std::floor((int)pos/sideSize) - std::floor((int) i/sideSize));
+        score += abs((int)pos%sideSize - (int) i%sideSize);
+    }
+
+    return score;
+}
 
 bool State::operator== (const State &secondState)
 {
@@ -143,6 +162,7 @@ void State::print() {
     std::cout << std::endl;
     std::cout << "Cursor Position: " << this->cursor << std::endl;
     std::cout << "Last Action: " << name(this->lastAction) << std::endl;
+    std::cout << "Heuristic: " << this->heuristic << std::endl;
     std::cout << "Cost: " << this->pathCost << std::endl << std::endl;
 }
 

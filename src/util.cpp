@@ -44,6 +44,7 @@ Problem createProblem(int argc, char* argv[])
         newInstance = getInstance(newStrings[i]);
         instances.push_back(newInstance);
     }
+    std::cout << instances.size() << std::endl;
     Problem p(instances);
     return p;
 }

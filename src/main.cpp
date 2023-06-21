@@ -12,9 +12,10 @@ int main (int argc, char* argv[]) {
     currentProblem = createProblem(argc, argv);
     algorithmType = processArgs(argc, argv);
 
+
     switch (algorithmType) {
         case BFS:
-                {
+            {
                 Bfs algorithmBfs;
                 for(int i = 0; i < currentProblem.instances.size(); i ++) {
                     Solution s = algorithmBfs.solve(currentProblem.instances[i]);
@@ -24,6 +25,11 @@ int main (int argc, char* argv[]) {
             break;
         case ASTAR:
             {
+                Astar algorithmAstar;
+                for(int i = 0; i < currentProblem.instances.size(); i ++) {
+                    Solution s = algorithmAstar.solve(currentProblem.instances[i]);
+                    s.print();
+                }
             }
             break;
         case GBFS:
