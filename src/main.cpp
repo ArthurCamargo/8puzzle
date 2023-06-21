@@ -16,8 +16,8 @@ int main (int argc, char* argv[]) {
     switch (algorithmType) {
         case BFS:
             {
-                Bfs algorithmBfs;
                 for(int i = 0; i < currentProblem.instances.size(); i ++) {
+                    Bfs algorithmBfs;
                     Solution s = algorithmBfs.solve(currentProblem.instances[i]);
                     s.print();
                 }
@@ -25,8 +25,8 @@ int main (int argc, char* argv[]) {
             break;
         case ASTAR:
             {
-                Astar algorithmAstar;
                 for(int i = 0; i < currentProblem.instances.size(); i ++) {
+                    Astar algorithmAstar;
                     Solution s = algorithmAstar.solve(currentProblem.instances[i]);
                     s.print();
                 }

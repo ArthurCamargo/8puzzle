@@ -16,6 +16,7 @@ typedef enum action {
 }action;
 
 
+
 class State {
     public:
         long pathCost;
@@ -30,17 +31,15 @@ class State {
         State(std::string newGame);
         State(std::string newGame, int cursorPosition, action newAction, long pathCost, State* parent);
 
+
+        long long int numberRepresentation();
+
         bool isPossibleMove(action move);
         State nextState(action move);
 
         int manhattan();
 
-        int hash() const;
         bool operator== (const State &secondState);
-        bool operator< (const State &secondState) const
-        {
-            return this->hash() < secondState.hash();
-        }
 
         void print();
         std::vector<State> expand();
@@ -48,5 +47,3 @@ class State {
         State() = default;
         ~State() = default;
 };
-
-

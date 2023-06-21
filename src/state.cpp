@@ -137,7 +137,6 @@ int State::manhattan()
     for(int i = 0; i < objective.size(); i ++)
     {
         int pos = this->game.find(objective[i]);
-        std::cout << objective [i] << ", " <<  pos << std::endl;
         score += abs(std::floor((int)pos/sideSize) - std::floor((int) i/sideSize));
         score += abs((int)pos%sideSize - (int) i%sideSize);
     }
@@ -150,11 +149,18 @@ bool State::operator== (const State &secondState)
     return this->game == secondState.game;
 }
 
+long long int State::numberRepresentation()
+{
+    long long int number =  strtoll(this->game.c_str(), NULL, 16);
+    return number;
+}
+
 void State::print() {
     std::cout << "Game: "; 
+    int sideSize = sqrt(game.size());
     for (int i = 0; i < game.size(); i ++)
     {
-        if(i % 3 == 0)
+        if(i % sideSize == 0)
             std::cout << std::endl;
 
         std::cout << this->game[i];

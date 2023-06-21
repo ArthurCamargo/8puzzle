@@ -5,7 +5,8 @@
 #include <chrono>
 #include <algorithm>
 #include <queue>
-#include <map>
+#include <unordered_set>
+#include <functional>
 
 #include "problem.h"
 #include "solution.h"
@@ -23,7 +24,7 @@ class Algorithm {
         std::string name;
         int numberExpansions;
         long meanHeuristicValue;
-        std::vector<State> explored;
+        std::unordered_set<long long int> explored;
 
          virtual ~Algorithm() = default;
 };
@@ -33,12 +34,12 @@ class Bfs : Algorithm {
         std::queue<State> open;
 
         Bfs() {
+            open = std::queue<State>();
             Algorithm::name = "BFS";
             Algorithm::numberExpansions = 0;
             Algorithm::meanHeuristicValue = 0;
         };
 
-        ~Bfs() = default;
 
         Solution solve(Instance currentInstance);
 };

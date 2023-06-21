@@ -40,11 +40,9 @@ Problem createProblem(int argc, char* argv[])
     newStrings.push_back(newString); // push the last one
 
     for (int i = 0; i < newStrings.size(); i++) {
-        std::cout << newStrings[i] << std::endl;
         newInstance = getInstance(newStrings[i]);
         instances.push_back(newInstance);
     }
-    std::cout << instances.size() << std::endl;
     Problem p(instances);
     return p;
 }
@@ -65,8 +63,6 @@ Instance getInstance(std::string s)
 
     State initialState(s);
     State finalState(finalString);
-
-    std::cout << size << std::endl;
 
     Instance new_instance(initialState, finalState, size);
 

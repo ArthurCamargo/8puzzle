@@ -23,11 +23,11 @@ Solution Bfs::solve(Instance currentInstance) {
         actualState = this->open.front();
         actualState.print();
         this->open.pop();
+        long long int numberRepresentation = actualState.numberRepresentation();
 
-
-        if(std::find(this->explored.begin(), this->explored.end(), actualState) == this->explored.end())
+        if(this->explored.find(numberRepresentation) == this->explored.end())
         {
-            this->explored.push_back(actualState);
+            this->explored.insert(numberRepresentation);
             currentInstance.statesExpanded ++;
             newStates = actualState.expand();
             for (State expandedState : newStates)
@@ -80,14 +80,15 @@ Solution Astar::solve(Instance currentInstance) {
             return s;
         }
 
+        long long int numberRepresentation = actualState.numberRepresentation();
         actualState = this->open.top();
         actualState.print();
         this->open.pop();
 
 
-        if(std::find(this->explored.begin(), this->explored.end(), actualState) == this->explored.end())
+        if(auto search = this->explored.find(numberRepresentation); search == this->explored.end())
         {
-            this->explored.push_back(actualState);
+            this->explored.insert(numberRepresentation);
             currentInstance.statesExpanded ++;
             newStates = actualState.expand();
             for (State expandedState : newStates)
