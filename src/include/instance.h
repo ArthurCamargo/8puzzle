@@ -6,23 +6,25 @@
 
 class Instance {
     public:
-        State initial_state;
-        State final_state;
+        State initialState;
+        State finalState;
         int size;
+        int statesExpanded;
 
-        Instance(State new_initial_state, const State new_final_state, int new_size) {
-            this->initial_state = new_initial_state;
-            this->final_state = new_final_state;
-            this->size = new_size;
+        Instance(State newInitialState, State newFinalState, int newSize) {
+            this->initialState = newInitialState;
+            this->finalState = newFinalState;
+            this->size = newSize;
+            this->statesExpanded = 0;
         }
 
         void print()
         {
             std::cout << "Instance size: " << size << std::endl;
             std::cout << "Initial State: ";
-            initial_state.print();
+            initialState.print();
             std::cout << "Final State: ";
-            final_state.print();
+            finalState.print();
         }
 
         Instance() = default;

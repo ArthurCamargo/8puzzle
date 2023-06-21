@@ -16,9 +16,10 @@ char encode(char* c)
     return uniqueChar;
 }
 
-Problem createProblem(int argc, char* argv[], algorithms a)
+Problem createProblem(int argc, char* argv[])
 {
     std::vector<Instance> instances;
+    Instance newInstance;
     std::string newString;
     std::vector<std::string> newStrings;
 
@@ -39,11 +40,11 @@ Problem createProblem(int argc, char* argv[], algorithms a)
     newStrings.push_back(newString); // push the last one
 
     for (int i = 0; i < newStrings.size(); i++) {
-        Instance newInstance = getInstance(newStrings[i]);
+        std::cout << newStrings[i] << std::endl;
+        newInstance = getInstance(newStrings[i]);
         instances.push_back(newInstance);
     }
-
-    Problem p(instances, a);
+    Problem p(instances);
     return p;
 }
 
@@ -64,19 +65,20 @@ Instance getInstance(std::string s)
     State initialState(s);
     State finalState(finalString);
 
+    std::cout << size << std::endl;
+
     Instance new_instance(initialState, finalState, size);
 
     return new_instance;
 }
 
-Problem processArgs(int argc, char* argv[])
+algorithmEnum processArgs(int argc, char* argv[])
 {
     int opt_char;
 
-    const std::string usage = "Usage: ./main <option> instance \n";
 
-    int i = 0;
-    Problem p;
+    algorithmEnum algorithmType;
+
 
     static struct option long_options[] = {
         {"bfs", no_argument, 0, 'b'},
@@ -91,26 +93,25 @@ Problem processArgs(int argc, char* argv[])
                     long_options, NULL)) != -1) {
         switch (opt_char) {
             case (int)'b':
-                p = createProblem(argc, argv, BFS);
-                p.print();
+                algorithmType = BFS;
                 break;
             case (int)'a':
-                p = createProblem(argc, argv, ASTAR);
+                algorithmType = ASTAR;
                 break;
             case (int)'d':
-                p = createProblem(argc, argv, IDFS);
+                algorithmType = IDFS;
                 break;
             case (int)'i':
-                p = createProblem(argc, argv, IDASTAR);
+                algorithmType = IDASTAR;
                 break;
             case (int)'g': 
-                p = createProblem(argc, argv, GBFS);
+                algorithmType = GBFS;
                 break;
             default:
-                std::cout << "none of the above" << std::endl;
+                std::cout << "[!] Error, algorithm not select" << std::endl;
                 exit(1);
                 break;
        }
    }
-   return p;
+   return algorithmType;
 }

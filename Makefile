@@ -8,8 +8,8 @@ SRCS := $(shell find $(SRC_DIR) -name "*.cpp")
 INC_DIRS := include
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CPPFLAGS := $(INC_FLAGS) -MMD -MP
-DEBUG_FLAGS := -g -Wall ##Turn on warning (all) and debug info to use gdb 
+CPPFLAGS := $(INC_FLAGS)
+DEBUG_FLAGS := -g -pg ##Turn on warning (all) and debug info to use gdb 
 
 # Prepends BUILD_DIR and appends .o to every src file
 # As an example, ./your_dir/hello.cpp turns into ./build/./your_dir/hello.cpp.o
