@@ -9,6 +9,7 @@ Solution Bfs::solve(Instance currentInstance) {
     if(currentInstance.initialState == currentInstance.finalState)
     {
         s.numExpanded = currentInstance.statesExpanded;
+        s.optimalSolutionLength = 0;
         return s;
     }
 
@@ -35,6 +36,7 @@ Solution Bfs::solve(Instance currentInstance) {
                 if(expandedState == currentInstance.finalState)
                 {
                     s.numExpanded = currentInstance.statesExpanded;
+                    s.optimalSolutionLength = expandedState.pathCost;
                     return s;
                 }
 
@@ -66,12 +68,6 @@ Solution Astar::solve(Instance currentInstance) {
     this->open.push(currentInstance.initialState);
 
     s.initialHeuristicValue = currentInstance.initialState.heuristic;
-    if(currentInstance.initialState == currentInstance.finalState)
-    {
-        s.numExpanded = currentInstance.statesExpanded;
-        return s;
-    }
-
 
     while(true) {
         if(this->open.empty())
@@ -85,6 +81,14 @@ Solution Astar::solve(Instance currentInstance) {
         actualState.print();
         this->open.pop();
 
+        if(actualState == currentInstance.finalState)
+        {
+            s.numExpanded = currentInstance.statesExpanded;
+            s.optimalSolutionLength = actualState.pathCost;
+            return s;
+        }
+
+
 
         if(auto search = this->explored.find(numberRepresentation); search == this->explored.end())
         {
@@ -93,12 +97,6 @@ Solution Astar::solve(Instance currentInstance) {
             newStates = actualState.expand();
             for (State expandedState : newStates)
             {
-                if(expandedState == currentInstance.finalState)
-                {
-                    s.numExpanded = currentInstance.statesExpanded;
-                    return s;
-                }
-
                 this->open.push(expandedState);
             }
         }

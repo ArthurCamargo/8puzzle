@@ -134,7 +134,7 @@ int State::manhattan()
 
     int sideSize  = sqrt(this->game.size());
 
-    for(int i = 0; i < objective.size(); i ++)
+    for(int i = 1; i < objective.size(); i ++)
     {
         int pos = this->game.find(objective[i]);
         score += abs(std::floor((int)pos/sideSize) - std::floor((int) i/sideSize));
