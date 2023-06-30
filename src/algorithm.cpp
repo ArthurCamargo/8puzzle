@@ -64,7 +64,7 @@ Solution Astar::solve(Instance currentInstance) {
     while (!this->open.empty()) {
 
         actualState = this->open.top();
-        //actualState.print();
+        actualState.print();
         this->open.pop();
 
         if(distances.count(actualState.game) == 0)
@@ -78,11 +78,10 @@ Solution Astar::solve(Instance currentInstance) {
                 s.optimalSolutionLength = actualState.pathCost;
                 return s;
             }
-
             newStates = actualState.expand();
             currentInstance.statesExpanded ++;
             for (State expandedState : newStates) {
-                open.push(expandedState);
+                    open.push(expandedState);
             }
         }
     }

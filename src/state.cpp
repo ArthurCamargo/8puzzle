@@ -129,16 +129,31 @@ int State::manhattan()
     int score = 0;
     std::string objective = "012345678";
 
-    if(this->game.size() == 15)
-        objective = "012345679ABCDEF";
+    if(this->game.size() == 16)
+        objective = "0123456789ABCDEF";
 
-    int sideSize  = sqrt(this->game.size());
+    int sideSize = sqrt(this->game.size());
+    //std::cout << "sideSize: " << sideSize << std::endl;
 
     for(int i = 1; i < objective.size(); i ++)
     {
         int pos = this->game.find(objective[i]);
-        score += abs(std::floor((int)pos/sideSize) - std::floor((int) i/sideSize));
-        score += abs((int)pos%sideSize - (int) i%sideSize);
+        //std::cout << "Pos " << i << " : "  <<  pos << std::endl;
+        
+        int current_x = pos/sideSize;
+        int perfect_x = i/sideSize;
+
+        score += abs(current_x - perfect_x);
+        //std::cout << "score vertical "  << i << " : " << score <<
+            //" current x : " << current_x  << " perfect_x: "<< perfect_x << std::endl;
+
+
+        int current_y = pos%sideSize;
+        int perfect_y = i%sideSize;
+
+        score += abs(current_y - perfect_y);
+        //std::cout << " current y : " << current_y  << " perfect_y: "<< perfect_y << std::endl;
+        //std::cout << "score total "  << i << " : " << score<< std::endl;
     }
 
     return score;

@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <queue>
 #include <unordered_set>
-#include <map>
+#include <unordered_map>
 #include <functional>
 
 #include "problem.h"
@@ -53,10 +53,10 @@ bool aStarCompare(State state1 , State state2);
 class Astar: Algorithm {
     public:
         std::priority_queue<State, std::vector<State>, comp> open;
-        std::map<std::string, int> distances;
+        std::unordered_map<std::string, int> distances;
 
-        Astar() : open(aStarCompare) {
-            distances = std::map<std::string, int>();
+        Astar() : open(aStarCompare), distances() {
+            distances = std::unordered_map<std::string, int>();
             Algorithm::name = "Astar";
             Algorithm::numberExpansions = 0;
             Algorithm::meanHeuristicValue = 0;
