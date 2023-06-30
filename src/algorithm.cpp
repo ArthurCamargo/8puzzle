@@ -64,10 +64,10 @@ Solution Astar::solve(Instance currentInstance) {
     while (!this->open.empty()) {
 
         actualState = this->open.top();
+        //actualState.print();
         this->open.pop();
 
-        if(distances.count(actualState.game) == 0 ||
-            actualState.pathCost < distances[actualState.game])
+        if(distances.count(actualState.game) == 0)
         {
             distances[actualState.game] = actualState.pathCost;
 
@@ -82,10 +82,7 @@ Solution Astar::solve(Instance currentInstance) {
             newStates = actualState.expand();
             currentInstance.statesExpanded ++;
             for (State expandedState : newStates) {
-                if(expandedState.heuristic < 100000)
-                {
-                    open.push(expandedState);
-                }
+                open.push(expandedState);
             }
         }
     }
