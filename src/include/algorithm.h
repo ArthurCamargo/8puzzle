@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <queue>
 #include <unordered_set>
+#include <map>
 #include <functional>
 
 #include "problem.h"
@@ -24,7 +25,6 @@ class Algorithm {
         std::string name;
         int numberExpansions;
         long meanHeuristicValue;
-        std::unordered_set<long long int> explored;
 
          virtual ~Algorithm() = default;
 };
@@ -32,9 +32,11 @@ class Algorithm {
 class Bfs : Algorithm {
     public:
         std::queue<State> open;
+        std::unordered_set<long long int> expanded;
 
         Bfs() {
             open = std::queue<State>();
+
             Algorithm::name = "BFS";
             Algorithm::numberExpansions = 0;
             Algorithm::meanHeuristicValue = 0;
@@ -51,8 +53,10 @@ bool aStarCompare(State state1 , State state2);
 class Astar: Algorithm {
     public:
         std::priority_queue<State, std::vector<State>, comp> open;
+        std::map<std::string, int> distances;
 
         Astar() : open(aStarCompare) {
+            distances = std::map<std::string, int>();
             Algorithm::name = "Astar";
             Algorithm::numberExpansions = 0;
             Algorithm::meanHeuristicValue = 0;
@@ -61,5 +65,8 @@ class Astar: Algorithm {
         Solution solve(Instance currentInstance);
 };
 
+class IDAstart: Algorithm {
+    public:
+        std::priority_queue<State, std::vector<State>, comp> open;
 
-
+};

@@ -20,7 +20,7 @@ typedef enum action {
 class State {
     public:
         long pathCost;
-        long costH;
+        long costH; 
         action lastAction;
         int cursor;
         State* parent;

@@ -1,4 +1,5 @@
 #include "include/algorithm.h"
+#include <iostream>
 
 Solution Bfs::solve(Instance currentInstance) {
     Solution s;
@@ -6,35 +7,29 @@ Solution Bfs::solve(Instance currentInstance) {
     State actualState;
     this->open.push(currentInstance.initialState);
 
-    if(currentInstance.initialState == currentInstance.finalState)
-    {
+    if (currentInstance.initialState == currentInstance.finalState) {
         s.numExpanded = currentInstance.statesExpanded;
         s.optimalSolutionLength = 0;
         return s;
     }
 
-
-    while(true) {
-        if(this->open.empty())
-        {
+    while (true) {
+        if (this->open.empty()) {
             std::cout << "There is no solution" << std::endl;
             return s;
         }
 
         actualState = this->open.front();
-        actualState.print();
+        // actualState.print();
         this->open.pop();
         long long int numberRepresentation = actualState.numberRepresentation();
 
-        if(this->explored.find(numberRepresentation) == this->explored.end())
-        {
-            this->explored.insert(numberRepresentation);
-            currentInstance.statesExpanded ++;
+        if (this->expanded.find(numberRepresentation) == this->expanded.end()) {
+            this->expanded.insert(numberRepresentation);
+            currentInstance.statesExpanded++;
             newStates = actualState.expand();
-            for (State expandedState : newStates)
-            {
-                if(expandedState == currentInstance.finalState)
-                {
+            for (State expandedState : newStates) {
+                if (expandedState == currentInstance.finalState) {
                     s.numExpanded = currentInstance.statesExpanded;
                     s.optimalSolutionLength = expandedState.pathCost;
                     return s;
@@ -47,65 +42,53 @@ Solution Bfs::solve(Instance currentInstance) {
     return s;
 };
 
+bool aStarCompare(State state1, State state2) {
+    int state1Cost = state1.heuristic + state1.pathCost;
+    int state2Cost = state2.heuristic + state2.pathCost;
 
-bool aStarCompare(State state1 , State state2) {
-     int state1Cost = state1.heuristic + state1.pathCost;
-     int state2Cost = state2.heuristic + state2.pathCost;
-
-     if(state1Cost == state2Cost)
-     {
-             return state1.heuristic > state2.heuristic;
-     }
-     return state1Cost > state2Cost;
+    if (state1Cost == state2Cost) {
+        return state1.heuristic > state2.heuristic;
+    }
+    return state1Cost > state2Cost;
 }
 
-
-
 Solution Astar::solve(Instance currentInstance) {
+    // TODO: Fix the problems with the reopening
+    // Problem reopening
     Solution s;
     std::vector<State> newStates;
     State actualState;
     this->open.push(currentInstance.initialState);
+    currentInstance.statesExpanded++;
 
-    s.initialHeuristicValue = currentInstance.initialState.heuristic;
+    while (!this->open.empty()) {
 
-    while(true) {
-        if(this->open.empty())
-        {
-            std::cout << "There is no solution" << std::endl;
-            return s;
-        }
-
-        long long int numberRepresentation = actualState.numberRepresentation();
         actualState = this->open.top();
-        actualState.print();
         this->open.pop();
 
-        if(actualState == currentInstance.finalState)
+        if(distances.count(actualState.game) == 0 ||
+            actualState.pathCost < distances[actualState.game])
         {
-            s.numExpanded = currentInstance.statesExpanded;
-            s.optimalSolutionLength = actualState.pathCost;
-            return s;
-        }
+            distances[actualState.game] = actualState.pathCost;
 
+            if (actualState == currentInstance.finalState) {
+                // TODO: Create a function to copy the solution
+                // Create the time and meanheuristic value for this
+                s.numExpanded = currentInstance.statesExpanded;
+                s.optimalSolutionLength = actualState.pathCost;
+                return s;
+            }
 
-
-        if(auto search = this->explored.find(numberRepresentation); search == this->explored.end())
-        {
-            this->explored.insert(numberRepresentation);
-            currentInstance.statesExpanded ++;
             newStates = actualState.expand();
-            for (State expandedState : newStates)
-            {
-                this->open.push(expandedState);
+            currentInstance.statesExpanded ++;
+            for (State expandedState : newStates) {
+                if(expandedState.heuristic < 100000)
+                {
+                    open.push(expandedState);
+                }
             }
         }
     }
+    std::cout << "There is no solution" << std::endl << std::endl;
     return s;
 };
-
-
-
-
-
-
