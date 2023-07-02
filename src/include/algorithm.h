@@ -11,6 +11,7 @@
 
 #include "problem.h"
 #include "solution.h"
+#include "timer.h"
 
 typedef enum algorithmEnum{
     BFS,
@@ -22,6 +23,7 @@ typedef enum algorithmEnum{
 
 class Algorithm {
     public:
+        Timer t;
         std::string name;
         int numberExpansions;
         long meanHeuristicValue;
@@ -40,6 +42,7 @@ class Bfs : Algorithm {
             Algorithm::name = "BFS";
             Algorithm::numberExpansions = 0;
             Algorithm::meanHeuristicValue = 0;
+            Algorithm::t.reset();
         };
 
 

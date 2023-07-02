@@ -5,11 +5,15 @@ Solution Bfs::solve(Instance currentInstance) {
     Solution s;
     std::vector<State> newStates;
     State actualState;
-    this->open.push(currentInstance.initialState);
+    State initialState = currentInstance.initialState;
+    s.initialHeuristicValue = initialState.heuristic;
+    this->open.push(initialState);
 
-    if (currentInstance.initialState == currentInstance.finalState) {
-        s.numExpanded = currentInstance.statesExpanded;
-        s.optimalSolutionLength = 0;
+    if (initialState == currentInstance.finalState)  {
+        s.time = this->t.elapsed();
+        s.numExpanded = 1;
+        s.optimalSolutionLength = 0; 
+        s.meanHeuristicValue = State::sumValues/(float)State::count;
         return s;
     }
 
@@ -30,11 +34,12 @@ Solution Bfs::solve(Instance currentInstance) {
             newStates = actualState.expand();
             for (State expandedState : newStates) {
                 if (expandedState == currentInstance.finalState) {
+                    s.time = this->t.elapsed();
                     s.numExpanded = currentInstance.statesExpanded;
+                    s.meanHeuristicValue = State::sumValues/(float)State::count;
                     s.optimalSolutionLength = expandedState.pathCost;
                     return s;
                 }
-
                 this->open.push(expandedState);
             }
         }
@@ -52,10 +57,7 @@ bool aStarCompare(State state1, State state2) {
     return state1Cost > state2Cost;
 }
 
-Solution Astar::solve(Instance currentInstance) {
-    // TODO: Fix the problems with the reopening
-    // Problem reopening
-    Solution s;
+Solution Astar::solve(Instance currentInstance) { Solution s;
     std::vector<State> newStates;
     State actualState;
     this->open.push(currentInstance.initialState);
@@ -72,8 +74,7 @@ Solution Astar::solve(Instance currentInstance) {
             distances[actualState.game] = actualState.pathCost;
 
             if (actualState == currentInstance.finalState) {
-                // TODO: Create a function to copy the solution
-                // Create the time and meanheuristic value for this
+                s.time = this->t.elapsed();
                 s.numExpanded = currentInstance.statesExpanded;
                 s.optimalSolutionLength = actualState.pathCost;
                 return s;

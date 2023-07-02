@@ -1,5 +1,9 @@
 #include "include/state.h"
 
+
+int State::count = 0;
+long long int State::sumValues = 0;
+
 std::string name(action move)
 {
     switch (move) {
@@ -126,6 +130,10 @@ State State::nextState(action move)
 
 int State::manhattan()
 {
+    State::count ++;
+    std::cout << "Count: " << State::count << std::endl;
+    
+
     int score = 0;
     std::string objective = "012345678";
 
@@ -133,28 +141,26 @@ int State::manhattan()
         objective = "0123456789ABCDEF";
 
     int sideSize = sqrt(this->game.size());
-    //std::cout << "sideSize: " << sideSize << std::endl;
 
     for(int i = 1; i < objective.size(); i ++)
     {
         int pos = this->game.find(objective[i]);
-        //std::cout << "Pos " << i << " : "  <<  pos << std::endl;
         
         int current_x = pos/sideSize;
         int perfect_x = i/sideSize;
 
         score += abs(current_x - perfect_x);
-        //std::cout << "score vertical "  << i << " : " << score <<
-            //" current x : " << current_x  << " perfect_x: "<< perfect_x << std::endl;
 
 
         int current_y = pos%sideSize;
         int perfect_y = i%sideSize;
 
         score += abs(current_y - perfect_y);
-        //std::cout << " current y : " << current_y  << " perfect_y: "<< perfect_y << std::endl;
-        //std::cout << "score total "  << i << " : " << score<< std::endl;
     }
+
+    
+    State::sumValues += score;
+    std::cout << "Sum Values: " << State::sumValues << std::endl;
 
     return score;
 }

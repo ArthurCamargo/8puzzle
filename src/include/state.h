@@ -19,6 +19,10 @@ typedef enum action {
 
 class State {
     public:
+
+        static int count;
+        static long long int sumValues;
+
         long pathCost;
         long costH; 
         action lastAction;
