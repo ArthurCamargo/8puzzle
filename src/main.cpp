@@ -1,52 +1,53 @@
 #include "include/util.h"
-
-#include <stdlib.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 #include <iostream>
 
-int main (int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 
-    Problem currentProblem;
-    algorithmEnum  algorithmType;
-    currentProblem = createProblem(argc, argv);
-    algorithmType = processArgs(argc, argv);
+  Problem currentProblem;
+  algorithmEnum algorithmType;
+  currentProblem = createProblem(argc, argv);
+  algorithmType = processArgs(argc, argv);
 
+  switch (algorithmType) {
+      case BFS: {
+        for (int i = 0; i < currentProblem.instances.size(); i++) {
+          Bfs bfs;
+          Solution s = bfs.solve(currentProblem.instances[i]);
+          s.print();
+        }
+      } break;
+      case ASTAR: {
+        for (int i = 0; i < currentProblem.instances.size(); i++) {
+          Astar astar;
+          Solution s = astar.solve(currentProblem.instances[i]);
+          s.print();
+        }
+      } break;
+      case GBFS: {
+        for (int i = 0; i < currentProblem.instances.size(); i++) {
+          class GBFS gbfs;
+          // Solution s = gbfs.solve(currentProblem.instances[i]);
+          // s.print();
+        }
 
-    switch (algorithmType) {
-        case BFS:
-            {
-                for(int i = 0; i < currentProblem.instances.size(); i ++) {
-                    Bfs algorithmBfs;
-                    Solution s = algorithmBfs.solve(currentProblem.instances[i]);
-                    s.print();
-                }
-            }
-            break;
-        case ASTAR:
-            {
-                for(int i = 0; i < currentProblem.instances.size(); i ++) {
-                    Astar algorithmAstar;
-                    Solution s = algorithmAstar.solve(currentProblem.instances[i]);
-                    s.print();
-                }
-            }
-            break;
-        case GBFS:
-            {
-            }
-            break;
-        case IDASTAR:
-            {
-            }
-            break;
-        case IDFS:
-            {
-            }
-            break;
-    }
+      } break;
+      case IDASTAR: {
+        for (int i = 0; i < currentProblem.instances.size(); i++) {
+          IDAstar idastar;
+          // Solution s = idastar.solve(currentProblem.instances[i]);
+          // s.print();
+        }
+      } break;
+      case IDFS: {
+        for (int i = 0; i < currentProblem.instances.size(); i++) {
+          class IDFS idfs;
+          // Solution s = idfs.solve(currentProblem.instances[i]);
+          // s.print();
+        }
+      } break;
+  }
 
-
-    return 0;
+  return 0;
 }
-

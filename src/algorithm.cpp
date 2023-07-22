@@ -1,5 +1,8 @@
 #include "include/algorithm.h"
+#include <codecvt>
+#include <cstdint>
 #include <iostream>
+#include <string>
 
 Solution Bfs::solve(Instance currentInstance) {
     Solution s;
@@ -9,11 +12,11 @@ Solution Bfs::solve(Instance currentInstance) {
     s.initialHeuristicValue = initialState.heuristic;
     this->open.push(initialState);
 
-    if (initialState == currentInstance.finalState)  {
+    if (initialState == currentInstance.finalState) {
         s.time = this->t.elapsed();
         s.numExpanded = 1;
-        s.optimalSolutionLength = 0; 
-        s.meanHeuristicValue = State::sumValues/(float)State::count;
+        s.optimalSolutionLength = 0;
+        s.meanHeuristicValue = State::sumValues / (float)State::count;
         return s;
     }
 
@@ -36,7 +39,7 @@ Solution Bfs::solve(Instance currentInstance) {
                 if (expandedState == currentInstance.finalState) {
                     s.time = this->t.elapsed();
                     s.numExpanded = currentInstance.statesExpanded;
-                    s.meanHeuristicValue = State::sumValues/(float)State::count;
+                    s.meanHeuristicValue = State::sumValues / (float)State::count;
                     s.optimalSolutionLength = expandedState.pathCost;
                     return s;
                 }
@@ -57,7 +60,8 @@ bool aStarCompare(State state1, State state2) {
     return state1Cost > state2Cost;
 }
 
-Solution Astar::solve(Instance currentInstance) { Solution s;
+Solution Astar::solve(Instance currentInstance) {
+    Solution s;
     std::vector<State> newStates;
     State actualState;
     this->open.push(currentInstance.initialState);
@@ -66,11 +70,10 @@ Solution Astar::solve(Instance currentInstance) { Solution s;
     while (!this->open.empty()) {
 
         actualState = this->open.top();
-        actualState.print();
+        //actualState.print();
         this->open.pop();
 
-        if(distances.count(actualState.game) == 0)
-        {
+        if (distances.count(actualState.game) == 0) {
             distances[actualState.game] = actualState.pathCost;
 
             if (actualState == currentInstance.finalState) {
@@ -80,12 +83,46 @@ Solution Astar::solve(Instance currentInstance) { Solution s;
                 return s;
             }
             newStates = actualState.expand();
-            currentInstance.statesExpanded ++;
+            currentInstance.statesExpanded++;
             for (State expandedState : newStates) {
-                    open.push(expandedState);
+                open.push(expandedState);
             }
         }
     }
+    std::cout << "There is no solution" << std::endl << std::endl;
+    return s;
+};
+
+Solution GBFS::solve(Instance currentInstance) {
+    Solution s;
+    std::vector<State> newStates;
+    State actualState;
+    this->open.push(currentInstance.initialState);
+    currentInstance.statesExpanded++;
+
+    while (!this->open.empty()) {
+
+        actualState = this->open.top();
+        //actualState.print();
+        this->open.pop();
+
+        if (distances.count(actualState.game) == 0) {
+            distances[actualState.game] = actualState.pathCost;
+
+            if (actualState == currentInstance.finalState) {
+                s.time = this->t.elapsed();
+                s.numExpanded = currentInstance.statesExpanded;
+                s.optimalSolutionLength = actualState.pathCost;
+                return s;
+            }
+            newStates = actualState.expand();
+            currentInstance.statesExpanded++;
+            for (State expandedState : newStates) {
+                open.push(expandedState);
+            }
+        }
+    }
+
     std::cout << "There is no solution" << std::endl << std::endl;
     return s;
 };

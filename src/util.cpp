@@ -85,9 +85,9 @@ algorithmEnum processArgs(int argc, char* argv[])
         {"gbfs", no_argument, 0, 'g'},
         {NULL, no_argument, 0, 0},
     };
-    
+
     while((opt_char = getopt_long_only(argc, argv, "badig",
-                    long_options, NULL)) != -1) {
+                                       long_options, NULL)) != -1) {
         switch (opt_char) {
             case (int)'b':
                 algorithmType = BFS;
@@ -108,7 +108,7 @@ algorithmEnum processArgs(int argc, char* argv[])
                 std::cout << "[!] Error, algorithm not select" << std::endl;
                 exit(1);
                 break;
-       }
-   }
-   return algorithmType;
+        }
+    }
+    return algorithmType;
 }

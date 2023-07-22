@@ -68,8 +68,54 @@ class Astar: Algorithm {
         Solution solve(Instance currentInstance);
 };
 
-class IDAstart: Algorithm {
+class IDAstar: Algorithm {
     public:
         std::priority_queue<State, std::vector<State>, comp> open;
+        std::unordered_map<std::string, int> distances;
+    
+        IDAstar() : open(), distances() {
+            distances = std::unordered_map<std::string, int>();
+            Algorithm::name = "IDAstar";
+            Algorithm::numberExpansions = 0;
+            Algorithm::meanHeuristicValue = 0;
 
+        };
+        
+        Solution solve(Instance currentInstance);
 };
+
+
+class GBFS: Algorithm {
+    public:
+        std::priority_queue<State, std::vector<State>, comp> open;
+        std::unordered_map<std::string, int> distances;
+    
+        GBFS() : open(), distances() {
+            distances = std::unordered_map<std::string, int>();
+            Algorithm::name = "GBFS";
+            Algorithm::numberExpansions = 0;
+            Algorithm::meanHeuristicValue = 0;
+
+        };
+        
+        Solution solve(Instance currentInstance);
+};
+
+class IDFS: Algorithm {
+    public:
+        std::priority_queue<State, std::vector<State>, comp> open;
+        std::unordered_map<std::string, int> distances;
+    
+        IDFS() : open(), distances() {
+            distances = std::unordered_map<std::string, int>();
+            Algorithm::name = "IDFS";
+            Algorithm::numberExpansions = 0;
+            Algorithm::meanHeuristicValue = 0;
+
+        };
+        
+        Solution solve(Instance currentInstance);
+};
+
+
+
